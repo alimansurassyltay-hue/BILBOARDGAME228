@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIL STUDENT ADVENTURE</title>
+    <link href="[https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;500;700&display=swap](https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;500;700&display=swap)" rel="stylesheet">
+    <style>
+        /* === CSS VARIABLES === */
+        :root {
+            --primary-green: #4CAF50;
+            --light-green: #E8F5E9;
+            --sky-blue: #87CEEB;
+            --bright-yellow: #FFD700;
+            --danger-red: #E74C3C;
+            --bonus-yellow: #F1C40F;
+            --complication-purple: #9B59B6;
+            --text-dark: #333;
+            --text-light: #fff;
+            --font-heading: 'Fredoka One', cursive;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        /* === GLOBAL STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            background-color: #f4f7f6;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 40px;
+        }
+
+        /* === HEADER & NAVIGATION === */
+        header {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--bright-yellow);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--bright-yellow);
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, #b3e5fc 100%);
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.7);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            color: #34495e;
+        }
+
+        .cta-btn {
+            background-color: var(--bright-yellow);
+            color: #2c3e50;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: var(--font-heading);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            background-color: #f1c40f;
+        }
+
+        /* === GRID LAYOUTS (Cards) === */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary-green);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* === HOW TO PLAY SECTION === */
+        .tokens-list {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .token {
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card-types .card {
+            text-align: center;
+            border-top: none;
+            color: white;
+        }
+
+        .card-oops { background-color: var(--danger-red); }
+        .card-lesson { background-color: var(--primary-green); }
+        .card-bonus { background-color: var(--bonus-yellow); color: #333 !important; }
+        .card-comp { background-color: var(--complication-purple); }
+
+        /* === PROTOTYPES GALLERY === */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 180px; /* Сделано меньше, чтобы скетчи не были огромными */
+            object-fit: contain; /* Фото не обрезается */
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 10px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+
+        /* === SPONSOR INTERVIEW (ACCORDION) === */
+        .accordion {
+            background-color: #fff;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: 0.4s;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .active, .accordion:hover {
+            background-color: var(--light-green);
+        }
+
+        .accordion:after {
+            content: '\002B'; /* Plus sign */
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212"; /* Minus sign */
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 15px;
+        }
+
+        .panel p {
+            padding: 15px 0;
+            font-style: italic;
+            border-left: 4px solid var(--primary-green);
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+
+        /* === PROFILE IMAGES (Авторы и Спонсор) === */
+        .profile-img {
+            width: 80px !important;  /* Жестко ограничиваем ширину */
+            height: 80px !important; /* Жестко ограничиваем высоту */
+            border-radius: 50%; 
+            overflow: hidden; /* Обрезаем все, что пытается вылезти */
+            margin: 0 auto 10px auto;
+            display: block;
+            border: 3px solid var(--primary-green);
+            object-fit: cover;
+            flex-shrink: 0; /* Запрещаем картинке растягиваться */
+        }
+
+        .sponsor-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* === TIMELINE === */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary-green);
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            border-radius: 2px;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 100%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: auto;
+            background-color: white;
+            border: 4px solid var(--bright-yellow);
+            top: 15px;
+            left: 12px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+        
+        footer a {
+            color: var(--bright-yellow);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">BIL ADVENTURE</div>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#rules">How to Play</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#interview">Interview</a></li>
+                <li><a href="#team">Team</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>BIL STUDENT ADVENTURE</h1>
+        <p>A fun board game for students to disconnect from gadgets, play with friends, build tactics, and boost their knowledge!</p>
+        <button class="cta-btn" onclick="document.getElementById('rules').scrollIntoView();">Explore the Game</button>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">About The Project</h2>
+        <div class="grid-container">
+            <div class="card">
+                <h3>🎲 What it is</h3>
+                <p>A Monopoly-style board game specifically designed for 2-6 players, tailored for school students.</p>
+            </div>
+            <div class="card">
+                <h3>⚠️ The Problem</h3>
+                <p>High student dependence on digital screens and a lack of engaging face-to-face communication in dorms.</p>
+            </div>
+            <div class="card">
+                <h3>💡 Why it matters</h3>
+                <p>It brings people together, improves communication, develops logical thinking, and helps learn new things through special tasks.</p>
+            </div>
+            <div class="card">
+                <h3>⭐ Uniqueness</h3>
+                <p>A relatable school theme, custom design, and a perfect balance between having fun and educational elements.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules">
+        <h2 class="section-title">How to Play & Game Logic</h2>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p><strong>Goal:</strong> The primary goal is to be the first player to complete the path from START to FINISH.</p>
+            <h3 style="margin-top: 20px;">Game Figures (Tokens):</h3>
+            <div class="tokens-list">
+                <div class="token">🍞 Toast</div>
+                <div class="token">🏆 Trophy</div>
+                <div class="token">🐦 Bird</div>
+                <div class="token">📖 Book</div>
+                <div class="token">⚽ Ball</div>
+                <div class="token">🧠 Brain</div>
+            </div>
+        </div>
+
+        <h3>Special Cards</h3>
+        <div class="grid-container card-types">
+            <div class="card card-oops">
+                <h3>🟥 Косяк (Oops!)</h3>
+                <p>The player must perform a penalty action described on the card.</p>
+            </div>
+            <div class="card card-lesson">
+                <h3>🟩 Урок (Lesson)</h3>
+                <p>An educational task or question to answer.</p>
+            </div>
+            <div class="card card-bonus">
+                <h3>🟨 Бонус (Bonus)</h3>
+                <p>A helpful reward or advantage for the player.</p>
+            </div>
+            <div class="card card-comp">
+                <h3>🟪 Усложнение</h3>
+                <p>A temporary difficulty or obstacle for the player.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="section-title">Final Sketches & Prototypes</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="placeholder1.jpg" alt="Initial Field Sketches">
+                <h4>Initial Field Sketches</h4>
+            </div>
+            <div class="gallery-item">
+                <img src="placeholder2.jpg" alt="Symbol Meanings">
+                <h4>Symbol Meanings</h4>
+            </div>
+            <div class="gallery-item">
+                <img src="placeholder3.jpg" alt="Card Designs">
+                <h4>Card Designs</h4>
+            </div>
+            <div class="gallery-item">
+                <img src="placeholder4.jpg" alt="Final Digital Board Design">
+                <h4>Final Digital Board Design</h4>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech" style="background-color: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+        <h2 class="section-title" style="margin-top: 20px;">Technical Requirements</h2>
+        <p style="text-align: center;"><strong>Tools & Technologies used to build the project:</strong><br> 
+        Canva, GitHub, Gemini, Visual Studio Code, HTML, CSS, JavaScript, Paper & Markers for prototyping.</p>
+    </section>
+
+    <section id="interview">
+        <h2 class="section-title">Sponsor Interview</h2>
+        
+        <div class="sponsor-info">
+            <img src="sponsor.jpg" alt="Kuatbek Ilyas" class="profile-img">
+            <p><strong>Sponsor:</strong> Kuatbek Ilyas | <strong>Interviewers:</strong> Alinur Kopzhasar & Asyltay Alimansur</p>
+        </div>
+        
+        <button class="accordion">Q: Can you briefly introduce yourself and why you support student projects?</button>
+        <div class="panel">
+            <p>"I work in the field of education and I am interested in innovative and creative ideas. I enjoy supporting student projects because they help young people develop creativity, responsibility, and critical thinking."</p>
+        </div>
+
+        <button class="accordion">Q: What problem do you think this project is trying to solve?</button>
+        <div class="panel">
+            <p>"This project helps solve the problem of low student engagement and lack of creative educational activities. Many students spend too much time on digital entertainment."</p>
+        </div>
+
+        <button class="accordion">Q: What impact would make this project worth supporting for you?</button>
+        <div class="panel">
+            <p>"This project would be worth supporting if it encourages teamwork, logical thinking, and creativity. If students enjoy playing the game and learn something new from it, I would consider it a successful project."</p>
+        </div>
+
+        <button class="accordion">Q: Who should be the main target audience?</button>
+        <div class="panel">
+            <p>"I believe the main target audience should be school students, especially teenagers. This age group is very active and curious."</p>
+        </div>
+
+        <button class="accordion">Q: What functions and features do you expect?</button>
+        <div class="panel">
+            <p>"I expect the game to have clear rules, attractive design, and interesting gameplay. It should be easy to understand, fair, and engaging."</p>
+        </div>
+
+        <button class="accordion">Q: What limitations or concerns do you have?</button>
+        <div class="panel">
+            <p>"My main concern is time management and complexity. Since this is a student project, it is important to keep the idea realistic and achievable."</p>
+        </div>
+
+        <button class="accordion">Q: What advice would you give before development begins?</button>
+        <div class="panel">
+            <p>"I would support this project if it is well-planned, creative, and original. My main advice is to stay focused, believe in your idea, and work consistently toward your goal."</p>
+        </div>
+    </section>
+
+    <section id="team">
+        <h2 class="section-title">About the Authors</h2>
+        <div class="grid-container">
+            <div class="card" style="text-align: center;">
+                <img src="Alinur.jpg" alt="Alinur" class="profile-img">
+                <h3>Alinur Kopzhasar</h3>
+                <p><strong>Role:</strong> Game Designer</p>
+                <p>Responsible for balancing the game rules, mechanics, and designing the logic of the special cards.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <img src="Alimansur.jpg" alt="Asyltay Alimansur" class="profile-img">
+                <h3>Asyltay Alimansur</h3>
+                <p><strong>Role:</strong> Web Developer & Project Designer</p>
+                <p>Responsible for creating the visual aesthetics of the board and coding this presentation website.</p>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 20px; background-color: var(--light-green); text-align: center;">
+            <h3>Our Motivation</h3>
+            <p>"While living in the dorms, we realized that the existing board games got boring and repetitive very quickly. We wanted to create our own engaging game from scratch and share it with everyone."</p>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <h2 class="section-title">Timeline & Future Plans</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Week 1</h4>
+                    <p>Brainstorming, concept creation, and hand-drawn sketches.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Week 2</h4>
+                    <p>Developing game rules, mechanics, and playtesting in the dorms.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Week 3</h4>
+                    <p>Finalizing digital designs (Canva) and conducting the sponsor interview.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Week 4</h4>
+                    <p>Web development, GitHub deployment, and final presentation prep.</p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+            <h3>🚀 Future Improvements</h3>
+            <p>We plan to release a mobile app version of the game, create expansion packs with new cards, and expand the game rules!</p>
+        </div>
+    </section>
+
+    <footer>
+        <h2>BIL STUDENT ADVENTURE</h2>
+        <p>Copyright &copy; 2026. All rights reserved.</p>
+        <p>View our code on <a href="#" target="_blank">GitHub Repository</a></p>
+    </footer>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+
+</body>
+</html>
